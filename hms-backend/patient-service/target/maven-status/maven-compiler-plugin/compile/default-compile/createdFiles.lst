@@ -1,0 +1,5 @@
+com\hms\patientservice\config\DataInitializer.class
+com\hms\patientservice\controller\PatientController.class
+com\hms\patientservice\entity\Patient.class
+com\hms\patientservice\PatientServiceApplication.class
+com\hms\patientservice\repository\PatientRepository.class

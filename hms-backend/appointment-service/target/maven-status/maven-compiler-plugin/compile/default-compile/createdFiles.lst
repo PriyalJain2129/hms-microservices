@@ -1,0 +1,8 @@
+com\hms\appointmentservice\client\DoctorClient.class
+com\hms\appointmentservice\repository\AppointmentRepository.class
+com\hms\appointmentservice\client\PatientClient.class
+com\hms\appointmentservice\AppointmentServiceApplication.class
+com\hms\appointmentservice\controller\AppointmentController.class
+com\hms\appointmentservice\entity\Appointment.class
+com\hms\appointmentservice\config\DataInitializer.class
+com\hms\appointmentservice\dto\AppointmentResponse.class

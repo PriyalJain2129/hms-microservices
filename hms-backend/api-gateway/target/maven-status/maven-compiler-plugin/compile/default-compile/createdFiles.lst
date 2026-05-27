@@ -1,0 +1,3 @@
+com\hms\apigateway\ApiGatewayApplication.class
+com\hms\apigateway\AuthenticationFilter$Config.class
+com\hms\apigateway\AuthenticationFilter.class

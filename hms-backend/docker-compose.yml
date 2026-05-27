@@ -1,0 +1,180 @@
+services:
+ 
+  mysql-auth:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Priyal212931
+      MYSQL_DATABASE: auth_db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pPriyal212931"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+ 
+  mysql-patient:
+    image: mysql:8.0
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Priyal212931
+      MYSQL_DATABASE: patient_db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pPriyal212931"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+ 
+  mysql-doctor:
+    image: mysql:8.0
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Priyal212931
+      MYSQL_DATABASE: doctor_db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pPriyal212931"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+ 
+  mysql-appointment:
+    image: mysql:8.0
+    ports:
+      - "3310:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Priyal212931
+      MYSQL_DATABASE: appointment_db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pPriyal212931"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+ 
+  mysql-billing:
+    image: mysql:8.0
+    ports:
+      - "3311:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Priyal212931
+      MYSQL_DATABASE: billing_db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pPriyal212931"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+ 
+  mysql-pharmacy:
+    image: mysql:8.0
+    ports:
+      - "3312:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Priyal212931
+      MYSQL_DATABASE: pharmacy_db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pPriyal212931"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+ 
+  eureka-server:
+    build: ./eureka-server
+    restart: on-failure
+    ports:
+      - "8761:8761"
+ 
+  api-gateway:
+    build: ./api-gateway
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka
+ 
+  auth-service:
+    build: ./auth-service
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+      - mysql-auth
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-auth:3306/auth_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Priyal212931
+ 
+  patient-service:
+    build: ./patient-service
+    restart: on-failure
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+      - mysql-patient
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-patient:3306/patient_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Priyal212931
+ 
+  doctor-service:
+    build: ./doctor-service
+    restart: on-failure
+    ports:
+      - "8083:8083"
+    depends_on:
+      - eureka-server
+      - mysql-doctor
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-doctor:3306/doctor_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Priyal212931
+ 
+  appointment-service:
+    build: ./appointment-service
+    restart: on-failure
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+      - mysql-appointment
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-appointment:3306/appointment_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Priyal212931
+ 
+  billing-service:
+    build: ./billing-service
+    restart: on-failure
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+      - mysql-billing
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-billing:3306/billing_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Priyal212931
+ 
+  pharmacy-service:
+    build: ./pharmacy-service
+    restart: on-failure
+    ports:
+      - "8086:8086"
+    depends_on:
+      - eureka-server
+      - mysql-pharmacy
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-pharmacy:3306/pharmacy_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Priyal212931
+ 
