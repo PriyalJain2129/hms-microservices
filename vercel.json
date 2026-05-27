@@ -1,0 +1,1 @@
+﻿{"buildCommand":"npm run build","outputDirectory":"hms-frontend/dist","framework":null,"installCommand":"cd hms-frontend && npm install","rootDirectory":"hms-frontend"}
